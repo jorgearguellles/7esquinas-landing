@@ -1,0 +1,9 @@
+# macOS
+.DS_Store
+**/.DS_Store
+
+# Originales pesados — no van al repo
+uploads/
+fotos/*.jpg
+fotos/*.JPG
+fotos_compirmidas/
