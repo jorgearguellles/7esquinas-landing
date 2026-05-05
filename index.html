@@ -5,23 +5,21 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta name="description" content="Loft 7 Esquinas — alquiler en Miraflores, Cali. Reserva por WhatsApp." />
 <title>Loft 7 Esquinas · Miraflores, Cali</title>
+<link rel="icon" href="data:," />
 
-<!-- =========================================================
-     FONTS — Plus Jakarta Sans (fallback for Cereal)
-     ========================================================= -->
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+<!-- LCP — preload hero image so browser fetches it immediately -->
+<link rel="preload" as="image"
+     href="fotos/opt/hero-sala-balcon-1280.webp"
+     imagesrcset="fotos/opt/hero-sala-balcon-600.webp 600w, fotos/opt/hero-sala-balcon-1280.webp 1280w"
+     imagesizes="100vw"
+     type="image/webp" fetchpriority="high" />
 
-<!-- =========================================================
-     CDN: flatpickr (date range picker)
-     ========================================================= -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/flatpickr.min.css" />
 
-<!-- =========================================================
-     CDN: GLightbox (gallery lightbox)
-     ========================================================= -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/glightbox/3.2.0/css/glightbox.min.css" />
+<!-- flatpickr + glightbox — self-hosted, async to avoid render-blocking -->
+<link rel="preload" href="vendor/css/flatpickr.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+<noscript><link rel="stylesheet" href="vendor/css/flatpickr.min.css" /></noscript>
+<link rel="preload" href="vendor/css/glightbox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+<noscript><link rel="stylesheet" href="vendor/css/glightbox.min.css" /></noscript>
 
 <style>
   /* =========================================================
@@ -161,7 +159,7 @@
   .price-card .price-note { font-size: 13px; color: var(--gray); margin-top: 2px; }
   .btn-primary {
     display: inline-flex; align-items: center; justify-content: center; gap: 8px;
-    background: var(--red); color: #fff;
+    background: #C8003A; color: #fff;
     padding: 14px 24px; border-radius: var(--radius);
     font-weight: 600; font-size: 16px;
     width: 100%; margin-top: 12px;
@@ -365,7 +363,7 @@
     margin-top: 12px;
     font-size: 14px; font-weight: 600;
   }
-  .host-rating .stars { color: #FFB400; letter-spacing: 1px; }
+  .host-rating .stars { color: #8B6500; letter-spacing: 1px; }
   .host-bio { color: #444; font-size: 15px; margin-top: 12px; max-width: 540px; line-height: 1.6; }
   .host-card .btn-whatsapp { width: auto; padding: 14px 22px; margin-top: 0; }
   @media (max-width: 768px) {
@@ -387,13 +385,13 @@
   .review-avatar { width: 44px; height: 44px; border-radius: 50%; object-fit: cover; }
   .review-name { font-weight: 600; font-size: 15px; }
   .review-date { font-size: 13px; color: var(--gray); }
-  .review-stars { color: #FFB400; font-size: 14px; letter-spacing: 1px; margin-bottom: 8px; }
+  .review-stars { color: #8B6500; font-size: 14px; letter-spacing: 1px; margin-bottom: 8px; }
   .review-text { font-size: 14.5px; color: #444; line-height: 1.6; }
   /* Real-data review summary */
   .review-summary { display: grid; grid-template-columns: 1fr 2fr; gap: 48px; align-items: start; padding: 32px 0; border-top: 1px solid #EBEBEB; border-bottom: 1px solid #EBEBEB; margin-bottom: 32px; }
   .review-overall { text-align: center; }
   .review-overall .big { font-size: 64px; font-weight: 800; letter-spacing: -0.04em; line-height: 1; }
-  .review-overall .stars-row { color: #FFB400; font-size: 22px; letter-spacing: 2px; margin: 8px 0; }
+  .review-overall .stars-row { color: #8B6500; font-size: 22px; letter-spacing: 2px; margin: 8px 0; }
   .review-overall .meta { color: var(--gray); font-size: 14px; }
   .review-bars { display: grid; grid-template-columns: 1fr 1fr; gap: 18px 40px; }
   .review-bar { display: flex; flex-direction: column; gap: 6px; }
@@ -533,9 +531,16 @@
      1. HERO
      ========================================================= -->
 <header class="hero">
-  <img class="hero-img"
-       src="fotos/opt/hero-sala-balcon.jpg"
-       alt="Loft 7 Esquinas - sala y balcón al atardecer" />
+  <picture>
+    <source
+      srcset="fotos/opt/hero-sala-balcon-600.webp 600w, fotos/opt/hero-sala-balcon-1280.webp 1280w"
+      sizes="100vw"
+      type="image/webp" />
+    <img class="hero-img"
+         src="fotos/opt/hero-sala-balcon.jpg"
+         alt="Loft 7 Esquinas - sala y balcón al atardecer"
+         fetchpriority="high" />
+  </picture>
   <div class="hero-overlay"></div>
   <div class="hero-content">
     <div class="container">
@@ -572,46 +577,76 @@
     </div>
     <div class="gallery" id="gallery">
       <!-- 1 — Hero (spans 2 rows) -->
-      <a href="fotos/opt/hero-sala-balcon.jpg" class="glightbox" data-gallery="house">
-        <img loading="lazy" decoding="async" src="fotos/opt/hero-sala-balcon.jpg" alt="Sala y balcón al atardecer" />
+      <a href="fotos/opt/hero-sala-balcon.webp" class="glightbox" data-gallery="house">
+        <picture>
+          <source srcset="fotos/opt/hero-sala-balcon.webp" type="image/webp" />
+          <img loading="lazy" decoding="async" src="fotos/opt/hero-sala-balcon.jpg" alt="Sala y balcón al atardecer" />
+        </picture>
       </a>
       <!-- 2 — Habitación / cama -->
-      <a href="fotos/opt/habitacion-1.jpg" class="glightbox" data-gallery="house">
-        <img loading="lazy" decoding="async" src="fotos/opt/habitacion-1.jpg" alt="Habitación con cama Queen" />
+      <a href="fotos/opt/habitacion-1.webp" class="glightbox" data-gallery="house">
+        <picture>
+          <source srcset="fotos/opt/habitacion-1.webp" type="image/webp" />
+          <img loading="lazy" decoding="async" src="fotos/opt/habitacion-1.jpg" alt="Habitación con cama Queen" />
+        </picture>
       </a>
       <!-- 3 — Baño -->
-      <a href="fotos/opt/bano.jpg" class="glightbox" data-gallery="house">
-        <img loading="lazy" decoding="async" src="fotos/opt/bano.jpg" alt="Baño privado con ducha de vidrio" />
+      <a href="fotos/opt/bano.webp" class="glightbox" data-gallery="house">
+        <picture>
+          <source srcset="fotos/opt/bano.webp" type="image/webp" />
+          <img loading="lazy" decoding="async" src="fotos/opt/bano.jpg" alt="Baño privado con ducha de vidrio" />
+        </picture>
       </a>
       <!-- 4 — Balcón -->
-      <a href="fotos/opt/balcon-hamaca.jpg" class="glightbox" data-gallery="house">
-        <img loading="lazy" decoding="async" src="fotos/opt/balcon-hamaca.jpg" alt="Balcón con hamaca y plantas" />
+      <a href="fotos/opt/balcon-hamaca.webp" class="glightbox" data-gallery="house">
+        <picture>
+          <source srcset="fotos/opt/balcon-hamaca.webp" type="image/webp" />
+          <img loading="lazy" decoding="async" src="fotos/opt/balcon-hamaca.jpg" alt="Balcón con hamaca y plantas" />
+        </picture>
       </a>
       <!-- 5 — Habitación ángulo 2 -->
-      <a href="fotos/opt/habitacion-2.jpg" class="glightbox" data-gallery="house">
-        <img loading="lazy" decoding="async" src="fotos/opt/habitacion-2.jpg" alt="Habitación con ventana y armario" />
+      <a href="fotos/opt/habitacion-2.webp" class="glightbox" data-gallery="house">
+        <picture>
+          <source srcset="fotos/opt/habitacion-2.webp" type="image/webp" />
+          <img loading="lazy" decoding="async" src="fotos/opt/habitacion-2.jpg" alt="Habitación con ventana y armario" />
+        </picture>
       </a>
       <!-- 6 — Cocina -->
-      <a href="fotos/opt/balcon-cocina.jpg" class="glightbox" data-gallery="house">
-        <img loading="lazy" decoding="async" src="fotos/opt/balcon-cocina.jpg" alt="Cocina equipada y balcón con hamaca" />
+      <a href="fotos/opt/balcon-cocina.webp" class="glightbox" data-gallery="house">
+        <picture>
+          <source srcset="fotos/opt/balcon-cocina.webp" type="image/webp" />
+          <img loading="lazy" decoding="async" src="fotos/opt/balcon-cocina.jpg" alt="Cocina equipada y balcón con hamaca" />
+        </picture>
       </a>
       <!-- 7 — Zona trabajo (último visible en grid, badge aquí) -->
-      <a href="fotos/opt/zona-trabajo.jpg" class="glightbox" data-gallery="house">
-        <img loading="lazy" decoding="async" src="fotos/opt/zona-trabajo.jpg" alt="Zona de trabajo con escritorio y vista a la calle" />
+      <a href="fotos/opt/zona-trabajo.webp" class="glightbox" data-gallery="house">
+        <picture>
+          <source srcset="fotos/opt/zona-trabajo.webp" type="image/webp" />
+          <img loading="lazy" decoding="async" src="fotos/opt/zona-trabajo.jpg" alt="Zona de trabajo con escritorio y vista a la calle" />
+        </picture>
         <span class="gallery-more">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
           Ver todas (+3 fotos)
         </span>
       </a>
       <!-- 8-10 — Solo lightbox, ocultos en grid por overflow:hidden -->
-      <a href="fotos/opt/bano-detalle.jpg" class="glightbox" data-gallery="house" style="display:none">
-        <img decoding="async" src="fotos/opt/bano-detalle.jpg" alt="Detalle dispensadores ducha mármol" />
+      <a href="fotos/opt/bano-detalle.webp" class="glightbox" data-gallery="house" style="display:none">
+        <picture>
+          <source srcset="fotos/opt/bano-detalle.webp" type="image/webp" />
+          <img decoding="async" src="fotos/opt/bano-detalle.jpg" alt="Detalle dispensadores ducha mármol" />
+        </picture>
       </a>
-      <a href="fotos/opt/vista-7esquinas.jpg" class="glightbox" data-gallery="house" style="display:none">
-        <img decoding="async" src="fotos/opt/vista-7esquinas.jpg" alt="Vista exterior 7 Esquinas" />
+      <a href="fotos/opt/vista-7esquinas.webp" class="glightbox" data-gallery="house" style="display:none">
+        <picture>
+          <source srcset="fotos/opt/vista-7esquinas.webp" type="image/webp" />
+          <img decoding="async" src="fotos/opt/vista-7esquinas.jpg" alt="Vista exterior 7 Esquinas" />
+        </picture>
       </a>
-      <a href="fotos/opt/habitacion-pasillo.jpg" class="glightbox" data-gallery="house" style="display:none">
-        <img decoding="async" src="fotos/opt/habitacion-pasillo.jpg" alt="Pasillo y acceso a la habitación" />
+      <a href="fotos/opt/habitacion-pasillo.webp" class="glightbox" data-gallery="house" style="display:none">
+        <picture>
+          <source srcset="fotos/opt/habitacion-pasillo.webp" type="image/webp" />
+          <img decoding="async" src="fotos/opt/habitacion-pasillo.jpg" alt="Pasillo y acceso a la habitación" />
+        </picture>
       </a>
     </div>
   </div>
@@ -703,13 +738,21 @@
       <h2>Ubicación</h2>
       <p>Miraflores, Cali, Valle del Cauca. Te compartimos la dirección exacta una vez se confirme la reserva.</p>
     </div>
-    <div class="map-wrap">
-      <iframe
-        src="https://www.google.com/maps?q=Miraflores,+Cali,+Valle+del+Cauca,+Colombia&hl=es&z=15&output=embed"
-        loading="lazy"
-        referrerpolicy="no-referrer-when-downgrade"
-        title="Mapa zona aproximada"></iframe>
+    <div class="map-wrap" id="map-facade" onclick="loadMap()">
+      <div class="map-placeholder">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#717171" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>
+        </svg>
+        <span>Miraflores, Cali</span>
+        <button class="map-load-btn" onclick="loadMap()">Ver mapa interactivo</button>
+      </div>
     </div>
+    <style>
+      .map-placeholder { position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:12px; background:#f0ede8; cursor:pointer; }
+      .map-placeholder span { font-size:15px; color:var(--ink); font-weight:500; }
+      .map-load-btn { padding:10px 20px; border-radius:999px; background:var(--ink); color:#fff; font-size:14px; font-weight:600; cursor:pointer; border:none; font-family:inherit; }
+      .map-load-btn:hover { background:#444; }
+    </style>
     <p class="map-note">Zona aproximada · La dirección exacta se comparte tras confirmar la reserva.</p>
   </div>
 </section>
@@ -723,9 +766,13 @@
       <h2>Tu anfitrión</h2>
     </div>
     <div class="host-card">
-      <img class="host-avatar" loading="lazy"
-           src="fotos/opt/jorge.jpg"
-           alt="Jorge — anfitrión" />
+      <picture>
+        <source srcset="fotos/opt/jorge.webp" type="image/webp" />
+        <img class="host-avatar" loading="lazy"
+             src="fotos/opt/jorge.jpg"
+             width="140" height="140"
+             alt="Jorge — anfitrión" />
+      </picture>
       <div>
         <h3>Jorge</h3>
         <div class="host-role">Anfitrión · 8 años recibiendo huéspedes</div>
@@ -815,108 +862,33 @@
 <!-- =========================================================
      SCRIPTS — non-blocking, deferred
      ========================================================= -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/flatpickr.min.js" defer></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/l10n/es.js" defer></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/glightbox/3.2.0/js/glightbox.min.js" defer></script>
+<script src="vendor/js/glightbox.min.js" defer></script>
 
 <script>
-  // ---------------------------------------------------------
-  // CONFIG
-  // ---------------------------------------------------------
-  const PHONE = "573117619722";
-  const PRICE_PER_NIGHT = 128000;
-  const CLEANING_FEE = 50000;
-
-  const fmtCOP = n => "$" + n.toLocaleString("es-CO");
-  const fmtDate = d => {
-    const dd = String(d.getDate()).padStart(2,"0");
-    const mm = String(d.getMonth()+1).padStart(2,"0");
-    const yy = d.getFullYear();
-    return `${dd}/${mm}/${yy}`;
-  };
-
-  // ---------------------------------------------------------
-  // LAZY-LOAD blur fade-in
-  // ---------------------------------------------------------
+  // lazy-load blur fade-in
   document.querySelectorAll('img[loading="lazy"]').forEach(img => {
     if (img.complete) img.classList.add("loaded");
     else img.addEventListener("load", () => img.classList.add("loaded"));
   });
 
-  // ---------------------------------------------------------
-  // INIT — runs after deferred libs load
-  // ---------------------------------------------------------
+  function loadMap() {
+    const facade = document.getElementById("map-facade");
+    if (!facade) return;
+    const iframe = document.createElement("iframe");
+    iframe.src = "https://www.google.com/maps?q=Miraflores,+Cali,+Valle+del+Cauca,+Colombia&hl=es&z=15&output=embed";
+    iframe.referrerPolicy = "no-referrer-when-downgrade";
+    iframe.title = "Mapa zona aproximada";
+    iframe.style.cssText = "width:100%;height:100%;border:0;display:block;";
+    facade.innerHTML = "";
+    facade.style.cursor = "default";
+    facade.removeAttribute("role");
+    facade.removeAttribute("tabindex");
+    facade.appendChild(iframe);
+  }
+
   window.addEventListener("DOMContentLoaded", () => {
-    // GLightbox
     if (window.GLightbox) {
       GLightbox({ selector: ".glightbox", touchNavigation: true, loop: true });
-    }
-
-    // flatpickr range
-    const datesInput = document.getElementById("dates");
-    const summary = document.getElementById("summary");
-    const nightsLabel = document.getElementById("nights-label");
-    const nightsPrice = document.getElementById("nights-price");
-    const totalPrice = document.getElementById("total-price");
-    const waBtn = document.getElementById("wa-reserve");
-
-    let pickedRange = null;
-
-    if (window.flatpickr) {
-      flatpickr(datesInput, {
-        mode: "range",
-        minDate: "today",
-        dateFormat: "d/m/Y",
-        locale: window.flatpickr.l10ns ? window.flatpickr.l10ns.es : undefined,
-        showMonths: window.matchMedia("(min-width: 768px)").matches ? 2 : 1,
-        onChange: (selectedDates) => {
-          if (selectedDates.length === 2) {
-            pickedRange = selectedDates;
-            updateSummary();
-          } else {
-            pickedRange = null;
-            summary.style.display = "none";
-            disableWa();
-          }
-        }
-      });
-    }
-
-    function updateSummary() {
-      const [start, end] = pickedRange;
-      const ms = end - start;
-      const nights = Math.max(1, Math.round(ms / (1000 * 60 * 60 * 24)));
-      const subtotal = nights * PRICE_PER_NIGHT;
-      const total = subtotal + CLEANING_FEE;
-
-      nightsLabel.textContent = `${nights} ${nights === 1 ? "noche" : "noches"} × ${fmtCOP(PRICE_PER_NIGHT)}`;
-      nightsPrice.textContent = fmtCOP(subtotal);
-      totalPrice.textContent = fmtCOP(total);
-      summary.style.display = "block";
-
-      // Build WhatsApp link with prefilled message (exact format requested)
-      const msg = `Hola, quiero reservar del ${fmtDate(start)} al ${fmtDate(end)}.`;
-      const url = `https://wa.me/${PHONE}?text=${encodeURIComponent(msg)}`;
-      waBtn.setAttribute("href", url);
-      waBtn.removeAttribute("aria-disabled");
-      waBtn.style.pointerEvents = "auto";
-      waBtn.style.opacity = "1";
-    }
-
-    function disableWa() {
-      waBtn.setAttribute("href", "#");
-      waBtn.setAttribute("aria-disabled", "true");
-      waBtn.style.pointerEvents = "none";
-      waBtn.style.opacity = ".55";
-    }
-
-    // Host quick WhatsApp
-    const hostBtn = document.getElementById("wa-host");
-    if (hostBtn) {
-      const hostMsg = "Hola Jorge, te escribo desde la página de Loft 7 Esquinas. Tengo una pregunta sobre el loft.";
-      hostBtn.setAttribute("href", `https://wa.me/${PHONE}?text=${encodeURIComponent(hostMsg)}`);
-      hostBtn.setAttribute("target", "_blank");
-      hostBtn.setAttribute("rel", "noopener");
     }
   });
 </script>

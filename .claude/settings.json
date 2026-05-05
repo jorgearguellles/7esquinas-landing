@@ -1,0 +1,15 @@
+{
+  "hooks": {
+    "Stop": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "(git diff HEAD -- index.html | grep -q . || git diff --cached -- index.html | grep -q .) && npm run test:e2e || true"
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "name": "7esquinas-landing",
+  "private": true,
+  "scripts": {
+    "test": "npm run test:e2e && npm run test:visual && npm run test:lighthouse",
+    "test:e2e": "playwright test tests/e2e.spec.js",
+    "test:visual": "playwright test tests/visual.spec.js",
+    "test:lighthouse": "lhci autorun",
+    "test:update-snapshots": "playwright test tests/visual.spec.js --update-snapshots"
+  },
+  "devDependencies": {
+    "@lhci/cli": "^0.14.0",
+    "@playwright/test": "^1.44.0",
+    "http-server": "^14.1.1",
+    "serve": "^14.2.0",
+    "sharp-cli": "^5.2.0"
+  }
+}

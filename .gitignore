@@ -7,3 +7,9 @@ uploads/
 fotos/*.jpg
 fotos/*.JPG
 fotos_compirmidas/
+
+# Tests
+node_modules/
+.lighthouseci/
+test-results/
+playwright-report/
