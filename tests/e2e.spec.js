@@ -41,9 +41,9 @@ test('sticky WhatsApp CTA links to wa.me', async ({ page }) => {
   expect(await page.locator('#sticky-wa').getAttribute('href')).toContain('wa.me');
 });
 
-test('nightly price shows $128.000', async ({ page }) => {
+test('nightly price shows $130.000', async ({ page }) => {
   await page.goto('/');
-  await expect(page.locator('.sticky-cta-price strong')).toContainText('128.000');
+  await expect(page.locator('.sticky-cta-price strong')).toContainText('130.000');
 });
 
 test('mobile: sticky CTA visible, wa-float hidden', async ({ page }) => {
